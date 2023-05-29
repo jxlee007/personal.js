@@ -1,1 +1,5 @@
+let age = parseInt (readLine(), 10);
 
+if (age <=19){  
+  console.log("Take your kindle");
+  }
