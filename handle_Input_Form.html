@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling Inputs Using Form Elements</title>
+
+    <script>
+        function register(){
+            let name = document.getElementById("txtname").value;
+    
+            document.getElementById("name").innerHTML = name;
+        }
+    </script>
+
+</head>
+<body>
+    <div>
+        <form>
+            <h1>Handling Inputs</h1>
+            <!-- everything depends on change -->
+            <input type="text" id="txtname" placeholder="Enter Name" onchange="register()"></input>
+            <table width="400" border="1">
+                <tr>
+                    <th align="left">Product name</th>
+                    <td id="name"></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    
+</body>
+</html>
