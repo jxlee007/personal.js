@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling Inputs</title>
+    <script>
+        function create() {
+            var name = prompt("Enter Folder Name: ", "New Folder");
+            var msg = document.getElementById("msg");
+            (name == null) ? document.write("Action Canceled"):msg.innerHTML+="Folder Created: "+name+"<br>";
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <form>
+            <!-- <h1>Handling Inputs</h1> -->
+            <input type="button" value="Create Folder" onclick="create()"></input>
+            <div id="msg"></div>
+        </form>
+    </div>
+</body>
+</html>
