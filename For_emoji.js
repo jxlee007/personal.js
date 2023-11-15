@@ -1,6 +1,9 @@
 const timesToRepeat = 10;
 const emoji = "💕🤞";
+let answer = "";
 
 for(let i = 0; i < timesToRepeat ; i++) {
-    console.log(emoji);
+    answer += emoji;
 }
+
+console.log(answer); // 💕🤞
