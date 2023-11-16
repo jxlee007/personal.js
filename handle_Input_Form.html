@@ -8,8 +8,18 @@
     <script>
         function register(){
             let name = document.getElementById("txtname").value;
-    
+            let yes = document.getElementById("opyes");
+            let no = document.getElementById("opno");
+            // for radio buttons, we need to check if it is checked or not
+            if(yes.checked){
+                stock=yes.value;
+            }
+            else if(no.checked){
+                stock=no.value;
+            }
+
             document.getElementById("name").innerHTML = name;
+            document.getElementById("stock").innerHTML = stock;
         }
     </script>
 
@@ -18,12 +28,25 @@
     <div>
         <form>
             <h1>Handling Inputs</h1>
+            <dl>
+                <dt>Product Name</dt>
+                <dd><input type="text" id="txtname" placeholder="Enter Name" onchange="register()"></input></dd>
+
+                <dt>Is In Stock</dt>
+                <dd><input type="radio" name="stock" id="opyes" value="Available" onchange="register()"> yes
+                    <input type="radio" name="stock" id="opno" value="No Stock" onchange="register()"> no</dd>
+            </dl>
             <!-- everything depends on change -->
-            <input type="text" id="txtname" placeholder="Enter Name" onchange="register()"></input>
+            
             <table width="400" border="1">
                 <tr>
                     <th align="left">Product name</th>
                     <td id="name"></td>
+                </tr>
+
+                <tr>
+                    <th align="left">stock</th>
+                    <td id="stock" ></td>
                 </tr>
 
             </table>
