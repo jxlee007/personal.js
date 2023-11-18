@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List App</title>
+
+    <!-- Materialize Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+
+    <!-- CSS goes here -->
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            margin: 3%;
+        }
+
+        #head{
+            font-size: 4vw;
+            text-align: center;
+            color: darkblue;
+            text-transform: capitalize;
+            margin-bottom: 5vw;
+            font-weight: 500;
+        }
+
+        .card{
+            display: flex;
+            flex-direction: column;
+            margin-left: -10px;
+        }
+
+        .done{
+            opacity: 0.5;
+        }
+
+        .switch label{
+            color: white;
+        }
+
+        .card-action{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form onsubmit="return createTodo()">
+        <label id="head">To - Do List App 📒📌</label>
+        <input type="text" id="todoInput" required>
+        <a onclick="formValidation()" class="waves-effect waves-light btn">Add Todo</a>
+        <div id="todoList"></div>
+    </form>
+
+    <!-- Materialize Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+    <!-- JS goes here -->
+    <script>
+
+        let todos;
+
+        formValidation = () => {
+            if (document.getElementById("todoInput").value == "") {
+                alert("Please enter a task");
+            } else createTodo();
+        }
+
+        // create todo function
+        createTodo = () => {
+            console.log("submitted")
+
+            // get the value of the input
+            // if it is empty str return false
+            if (document.getElementById("todoInput").value == "") return false;
+
+            // push input in todos array & update display
+            todos.push(document.getElementById("todoInput").value);
+            updateDisplay(todos);
+
+            // reset value of input to empty str
+            document.getElementById("todoInput").value = "";
+
+            return false;
+        };
+
+        // delete todo function
+        deleteTodo = (index) => {
+            // remove todo from todos array
+            todos.splice(index, 1);
+            // update display
+            updateDisplay(todos);
+        };
+
+
+        // update todo front end
+        updateDisplay = (todos) => {
+            // target todo list container
+            const container = document.getElementById("todoList");
+
+            // reset value
+            container.innerHTML = "";
+
+            // map function is used to create a new array by applying a function to every element of the original array.
+            todos.map((todo, i) => {
+
+                // add card style
+                const innerContainer = document.createElement("div");
+                innerContainer.innerHTML = ` 
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card  purple accent-3">
+                        </div>
+                    </div>
+                </div>`;
+                const card = innerContainer.querySelector(".card");
+
+                console.log(todo);
+                // create a new div element
+                const div = document.createElement("div");
+                div.className = "todoListInner";
+                div.appendChild(document.createElement("p"));
+                div.querySelector("p").innerHTML = todo;
+                // add card style
+                div.querySelector("p").className = "card-title";
+                div.classList.add("card-content", "white-text");
+
+                // add done switch
+                const doneDiv = document.createElement("div");
+                doneDiv.className = "card-action";
+                doneDiv.innerHTML = `
+                <!-- Switch -->
+                <div class="switch">
+                    <label>
+                    Working
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Done
+                    </label>
+                </div>
+                    `;
+                doneDiv.querySelector("input").onchange = () => {  
+                    innerContainer.classList.contains("done") ? 
+                    innerContainer.classList.remove("done") : 
+                    innerContainer.classList.add("done");
+                }
+
+                // add delete button
+                const remove = document.createElement("a");
+                remove.classList.add("waves-effect", "waves-light", "btn");
+                remove.innerHTML = "Delete";
+                remove.onclick = () => {
+                    deleteTodo(i);
+                }
+
+                doneDiv.appendChild(remove);
+                card.appendChild(doneDiv);
+                card.appendChild(div);
+                container.appendChild(innerContainer);
+            })
+
+            // setup local storage
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+        if (localStorage.getItem("todos")) {
+            todos = JSON.parse(localStorage.getItem("todos"));
+            updateDisplay(todos);
+        } else todos = [];
+
+
+    </script>
+</body>
+
+</html>
