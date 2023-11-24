@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connect 4 - JS</title>
+
+    <!-- CSS -->
+    <style>
+    body {
+    background: #fff;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font: 12px "Montserrat", "Segoe UI", "Segoe UI Web Regular", "Segoe UI Symbol",
+        "Helvetica Neue", "BBAlpha Sans", "S60 Sans", Arial, sans-serif;
+    color: #111;
+}
+
+h2 {
+    position: absolute;
+    font-size: 30px;
+    font-family: "Oxygen", "Lucida Console", "Courier New", sans-serif, monospace;
+    margin-left: auto;
+    margin-right: auto;
+    display: contents;
+}
+
+h3 {
+    font-family: "Quicksand", "Lucida Console", "Courier New", sans-serif,
+        monospace;
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.container {
+    margin-top: 5rem;
+}
+
+.board {
+    border-radius: 5%;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: deepskyblue;
+    opacity: 1;
+    border: 2px solid #ddd;
+    transition: opacity 500ms linear;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.game-over-buttons {
+    pointer-events: none;
+}
+
+.game-over-board {
+    opacity: 0.3;
+    transition: opacity 1s linear;
+}
+
+td {
+    top: 0;
+    transition: top 2s;
+}
+
+.board button {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(242, 242, 242);
+    border-radius: 50px;
+    border: 4px solid black;
+    margin: 1px;
+    top: 0;
+    outline: none;
+}
+
+.clickedRowButton {
+    position: absolute;
+}
+
+.clicked {
+    top: 400px;
+}
+
+#reloadGame {
+    font-family: "Montserrat", "Lucida Console", "Courier New", sans-serif,
+        monospace;
+    width: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    background: green;
+    color: #fff;
+    font-size: 1.6em;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 600ms ease all;
+    outline: none;
+}
+
+#reloadGame:hover {
+    background: #fff;
+    color: #20d0f6;
+}
+
+#reloadGame:before,
+#reloadGame:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #20d0f6;
+    transition: 400ms ease all;
+}
+
+#reloadGame:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+#reloadGame:hover:before,
+#reloadGame:hover:after {
+    width: 100%;
+    transition: 600ms ease all;
+}
+
+#reloadGame:focus {
+    outline: none;
+    border-color: #ddd;
+    box-shadow: inset 0px 0px 5px 2px #efefef;
+}
+
+label {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.hidden {
+    display: none;
+}
+
+.oddRow {
+    background-color: #ababab;
+}
+
+.move-chip {
+    display: inline-block;
+    padding: 20px;
+    /*color: white;*/
+    position: relative;
+    margin: 0 0 10px 0;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container" align="center">
+        <h2>Connect Four Dots</h2>
+        <h3 id="gameCaptions">Click a column to begin game</h3>
+        <table id="connectFourBoard" class="board board-fade">
+            <tr>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+            </tr>
+            <tr>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+            </tr>
+            <tr>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+            </tr>
+            <tr>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+            </tr>
+            <tr>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+            </tr>
+            <tr>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+                <td><button type="button"></button></td>
+            </tr>
+        </table>
+        <div class="buttonContainer">
+            <button id="reloadGame">Reload Game</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+    <script>
+        function PlayConnectFour() {
+            this.initialized = false;
+            var playerOne, playerTwo;
+        }
+        PlayConnectFour.prototype = function () {
+            $(document).ready(function () {
+                g_connectFour.init();
+                $("#reloadGame").on('click', function () {
+                    $(".board").find("* button").css('background-color', 'rgb(242, 242, 242)').removeClass("clicked");
+                    $(".board button").removeClass("game-over-buttons");
+                    $(".board").removeClass("game-over-board");
+                    //TODO: Add prompts for second set of players to enter names... Or shouls just reload page for new players.
+                    playerOne = prompt("Player One name (Black Chips)");
+                    playerTwo = prompt("Player Two name (Red Chips)");
+                });
+            });
+
+            init = function (playerOne, playerTwo) {
+                var table = $('table tr');
+                playerOne = prompt("Player One name (Black Chips)");
+                var playerOneColor = 'rgb(0,0,0)';
+                playerTwo = prompt("Player Two name (Red Chips)");
+                var playerTwoColor = 'rgb(237, 45, 73)';
+
+                function switchPlayer(rowIndex, colIndex, color) {
+                    return table.eq(rowIndex).find('td').eq(colIndex).find('button').css('background-color', color).addClass("clicked");
+                }
+
+                function returnColor(rowIndex, colIndex) {
+                    return table.eq(rowIndex).find('td').eq(colIndex).find('button').css('background-color');
+                }
+
+                function checkBottom(colIndex) {
+                    var colorReport = returnColor(5, colIndex);
+                    for (var row = 5; row >= 0; row--) {
+                        colorReport = returnColor(row, colIndex);
+                        if (colorReport === 'rgb(242, 242, 242)') {
+                            return row;
+                        }
+                    }
+                }
+
+                function colorMatchCheck(one, two, three, four) {
+                    return (one === two && one === three && one === four && one !== 'rgb(242, 242, 242)' && one !== undefined);
+                }
+
+                function horizontalWinCheck() {
+                    for (var row = 0; row < 6; row++) {
+                        for (var col = 0; col < 4; col++) {
+                            if (colorMatchCheck(returnColor(row, col), returnColor(row, col + 1), returnColor(row, col + 2), returnColor(row, col + 3))) {
+                                g_connectFour.reportWin(row, col);
+                                return true;
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+                function verticalWinCheck() {
+                    for (var col = 0; col < 7; col++) {
+                        for (var row = 0; row < 3; row++) {
+                            if (colorMatchCheck(returnColor(row, col), returnColor(row + 1, col), returnColor(row + 2, col), returnColor(row + 3, col))) {
+                                g_connectFour.reportWin(row, col);
+                                return true;
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+
+                function diagonalWinCheck() {
+                    for (var col = 0; col < 5; col++) {
+                        for (var row = 0; row < 7; row++) {
+                            if (colorMatchCheck(returnColor(row, col), returnColor(row + 1, col + 1), returnColor(row + 2, col + 2), returnColor(row + 3, col + 3))) {
+                                g_connectFour.reportWin(row, col);
+                                return true;
+                            } else if (colorMatchCheck(returnColor(row, col), returnColor(row - 1, col + 1), returnColor(row - 2, col + 2), returnColor(row - 3, col + 3))) {
+                                g_connectFour.reportWin(row, col);
+                                return true;
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+                function gameEnd(currentPlayerName) {
+                    for (var col = 0; col < 7; col++) {
+                        for (var row = 0; row < 7; row++) {
+                            $('h3').text(currentPlayerName + " has won! Click Reload Game to play again!");
+                            $('.board').addClass('game-over-board');
+                            $('.board button').addClass('game-over-buttons');
+                        }
+                    }
+                }
+
+                var currentPlayer = 1;
+                var currentPlayerName = playerOne;
+                var currentColor = playerOneColor;
+
+                $('.board button').on('click', function () {
+                    var col = $(this).closest("td").index();
+                    var bottomAvail = checkBottom(col);
+                    switchPlayer(bottomAvail, col, currentColor);
+
+                    if (horizontalWinCheck() || verticalWinCheck() || diagonalWinCheck()) {
+                        gameEnd(currentPlayerName);
+                        if (g_connectFour.reportWin(true)) {
+                            $('h3').text(currentPlayerName + " has won! Click Reload Game to play again!");
+                        }
+                    } else {
+                        currentPlayer = currentPlayer * -1;
+
+                        if (currentPlayer === 1) {
+                            currentPlayerName = playerOne;
+                            $('h3').text(currentPlayerName + ": It's your turn, click a column to add your chip");
+                            currentColor = playerOneColor;
+                        } else {
+                            currentPlayerName = playerTwo;
+                            $('h3').text(currentPlayerName + ": It's your turn, click a column to add your chip.");
+                            currentColor = playerTwoColor;
+                        }
+                    }
+                })
+            },
+
+                reportWin = function (rowNum, colNum) {
+                    return (rowNum, colNum);
+                };
+            return {
+                init: init,
+                reportWin: reportWin,
+            };
+
+        }();
+
+        var g_connectFour = new PlayConnectFour();
+    </script>
+</body>
+
+</html>
