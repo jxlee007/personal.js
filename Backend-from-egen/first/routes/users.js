@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+// require mongoose after install
+const mongoose = require("mongoose");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+// setup connection
+mongoose.connect("mongodb://127.0.0.1:27017/practice")
+
+// make schema
+const userSchema = mongoose.Schema({
+    username : String,
+    age : Number
 });
 
-module.exports = router;
+// make model
+module.exports = mongoose.model("users", userSchema);
