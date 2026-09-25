@@ -1,2 +1,30 @@
-.vscode/launch.json
-..txt
+# VS Code
+.vscode/
+
+# Node.js / Express app dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Test / coverage output
+coverage/
+.nyc_output/
+
+# Build output
+build/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
